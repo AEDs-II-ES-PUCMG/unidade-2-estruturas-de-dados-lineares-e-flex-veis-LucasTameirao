@@ -214,7 +214,7 @@ public class App {
     	
         pilhaPedidos.empilhar(pedido);
 
-        for(int i = 0; i < pedido.getItensDoPedido().length; i++) {
+        for(int i = 0; i < pedido.getItensDoPedido().length && pedido.getItensDoPedido()[i] != null; i++) {
             pilhaProdutos.empilhar(pedido.getItensDoPedido()[i].getProduto());
         }
 
@@ -252,6 +252,8 @@ public class App {
 
         pilha.empilhar(2);
         System.out.println(pilha);
+
+        //desempilhando a pilha
 
         for(int i = (matricula.length - 1); i > 2; i--){
             pilha.desempilhar();
