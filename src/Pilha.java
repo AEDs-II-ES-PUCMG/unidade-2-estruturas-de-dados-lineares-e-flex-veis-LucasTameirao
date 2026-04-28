@@ -40,6 +40,21 @@ public class Pilha<E> {
 
 	}
 
+
+	@Override
+	public String toString(){
+		StringBuilder texto = new StringBuilder();
+
+		Celula<E> atual = topo;
+
+		while (atual != fundo) {
+			texto.append(atual.getItem() + ",\n");
+			atual = atual.getProximo();
+		}
+
+		return texto.toString();
+	}
+
 	/**
 	 * Cria e devolve uma nova pilha contendo os primeiros numItens elementos
 	 * do topo da pilha atual.
@@ -54,7 +69,19 @@ public class Pilha<E> {
 	 */
 	public Pilha<E> subPilha(int numItens) {
 		
-		// TODO
-		return null;
+		Pilha<E> referencia = new Pilha<>();
+		Pilha<E> subPilha = new Pilha<>();
+		Celula<E> atual = topo;
+		int cont = numItens;
+		while(atual != fundo && cont > 0){
+			referencia.empilhar(atual.getItem());
+			atual = atual.getProximo();
+			cont--;
+		}
+		while (referencia.vazia()) {
+			subPilha.empilhar(referencia.desempilhar());
+		}
+
+		return subPilha;
 	}
 }

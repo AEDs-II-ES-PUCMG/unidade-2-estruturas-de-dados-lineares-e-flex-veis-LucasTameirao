@@ -21,6 +21,8 @@ public class App {
 
     /** Pilha de pedidos */
     static Pilha<Pedido> pilhaPedidos = new Pilha<>();
+
+    static Pilha<Produto> pilhaProdutos = new Pilha<>();
         
     static void limparTela() {
         System.out.print("\033[H\033[2J");
@@ -210,12 +212,18 @@ public class App {
      */
     public static void finalizarPedido(Pedido pedido) {
     	
-    	// TODO
+        pilhaPedidos.empilhar(pedido);
+
+        for(int i = 0; i < pedido.getItensDoPedido().length; i++) {
+            pilhaProdutos.empilhar(pedido.getItensDoPedido()[i].getProduto());
+        }
+
+        System.out.println(pedido);
     }
     
     public static void listarProdutosPedidosRecentes() {
     	
-    	// TODO
+    	System.out.println(pilhaProdutos);
     }
     
 	public static void main(String[] args) {
@@ -229,6 +237,28 @@ public class App {
         
         int opcao = -1;
       
+        int[] matricula = {1,5,9,6,6,4,1};
+        Pilha<Integer> pilha = new Pilha<>();
+
+        //empilhando os valores
+
+        for(int i = (matricula.length - 1); i > 0; i--){
+            pilha.empilhar(matricula[i]);
+        }
+
+        //printando a pilha
+
+        System.out.println(pilha);
+
+        pilha.empilhar(2);
+        System.out.println(pilha);
+
+        for(int i = (matricula.length - 1); i > 2; i--){
+            pilha.desempilhar();
+        }
+
+        System.out.println(pilha);
+
         do{
             opcao = menu();
             switch (opcao) {
