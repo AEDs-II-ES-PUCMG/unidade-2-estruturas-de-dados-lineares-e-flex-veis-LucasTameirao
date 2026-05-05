@@ -23,6 +23,8 @@ public class App {
     static Pilha<Pedido> pilhaPedidos = new Pilha<>();
 
     static Pilha<Produto> pilhaProdutos = new Pilha<>();
+
+    static Fila<Pedido> filaDePedidos = new Fila<>();
         
     static void limparTela() {
         System.out.print("\033[H\033[2J");
@@ -66,6 +68,7 @@ public class App {
         System.out.println("4 - Iniciar novo pedido");
         System.out.println("5 - Fechar pedido");
         System.out.println("6 - Listar produtos dos pedidos mais recentes");
+        System.out.println("7 - Listar pedidos mais recentes");
         System.out.println("0 - Sair");
         System.out.print("Digite sua opção: ");
         return Integer.parseInt(teclado.nextLine());
@@ -207,22 +210,18 @@ public class App {
     }
     
     /**
-     * Finaliza um pedido, momento no qual ele deve ser armazenado em uma pilha de pedidos.
+     * Finaliza um pedido, momento no qual ele deve ser armazenado em uma fila de pedidos.
      * @param pedido O pedido que deve ser finalizado.
      */
     public static void finalizarPedido(Pedido pedido) {
-    	
-        pilhaPedidos.empilhar(pedido);
 
-        for(int i = 0; i < pedido.getItensDoPedido().length && pedido.getItensDoPedido()[i] != null; i++) {
-            pilhaProdutos.empilhar(pedido.getItensDoPedido()[i].getProduto());
-        }
+    	filaDePedidos.enfileirar(pedido);
+        
 
         System.out.println(pedido);
     }
     
     public static void listarProdutosPedidosRecentes() {
-    	
     	System.out.println(pilhaProdutos);
     }
     
@@ -261,6 +260,22 @@ public class App {
 
         System.out.println(pilha);
 
+        //Criando a fila
+
+        Fila<Character> filaDeCaracteres = new Fila<>();
+        Character[] caracteres = {'L', 'U', 'C', 'A', 'S', ' ', 'A', 'S', 'S', 'I', 'S'};
+
+        for(Character c : caracteres){
+            filaDeCaracteres.enfileirar(c);
+        }
+
+        //adicionando os valores a fila
+
+        Character c = new Character('S');
+        System.out.println("Caractere S aparece " + filaDeCaracteres.quantosCaracteres(c) + " vezes na fila");
+        filaDeCaracteres.imprimir();
+
+
         do{
             opcao = menu();
             switch (opcao) {
@@ -270,10 +285,18 @@ public class App {
                 case 4 -> pedido = iniciarPedido();
                 case 5 -> finalizarPedido(pedido);
                 case 6 -> listarProdutosPedidosRecentes();
+                case 7 -> listarPedidosRecentes(teclado);
             }
             pausa();
         }while(opcao != 0);       
 
         teclado.close();    
+    }
+
+    private static void listarPedidosRecentes(Scanner s) {
+        System.out.println("Quantos pedidos recentes deseja ver: ");
+        int quantosPedidos = s.nextInt();
+        Fila<Pedido> filaPedidosRecentes = filaDePedidos.extrairLote(quantosPedidos);
+        filaPedidosRecentes.imprimir();
     }
 }
