@@ -40,21 +40,6 @@ public class Pilha<E> {
 
 	}
 
-
-	@Override
-	public String toString(){
-		StringBuilder texto = new StringBuilder();
-
-		Celula<E> atual = topo;
-
-		while (atual != fundo) {
-			texto.append(atual.getItem() + ",\n");
-			atual = atual.getProximo();
-		}
-
-		return texto.toString();
-	}
-
 	/**
 	 * Cria e devolve uma nova pilha contendo os primeiros numItens elementos
 	 * do topo da pilha atual.
@@ -69,19 +54,29 @@ public class Pilha<E> {
 	 */
 	public Pilha<E> subPilha(int numItens) {
 		
-		Pilha<E> referencia = new Pilha<>();
-		Pilha<E> subPilha = new Pilha<>();
-		Celula<E> atual = topo;
-		int cont = numItens;
-		while(atual != fundo && cont > 0){
-			referencia.empilhar(atual.getItem());
-			atual = atual.getProximo();
-			cont--;
+		// TODO
+		return null;
+	}
+
+	void imprimir() {
+		if(vazia()){
+			throw new NoSuchElementException("A pilha está vazia!");
 		}
-		while (referencia.vazia()) {
-			subPilha.empilhar(referencia.desempilhar());
+		Celula<E> aux = topo;
+		while(aux!=fundo){
+			System.out.println(aux.getItem());
+			aux = aux.getProximo();
 		}
 
-		return subPilha;
+	}
+	void imprime_certo(){
+		Celula<E> atual = topo;
+		certo(atual);
+	}
+	void certo(Celula<E> atual){
+		if(atual!=fundo){
+			certo(atual.getProximo());
+			System.out.println(atual.getItem());
+		}
 	}
 }
